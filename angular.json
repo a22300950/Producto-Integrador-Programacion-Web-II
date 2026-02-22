@@ -6,7 +6,7 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "refaccionaria-la-escondida": {
+    "Refaccionaria_La_Escondida": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -19,11 +19,9 @@
             "browser": "src/main.ts",
             "tsConfig": "tsconfig.app.json",
             "assets": [
-              {
-                "glob": "**/*",
-                "input": "public"
-              }
-            ],
+                { "glob": "**/*", "input": "public" },
+                { "glob": "**/*", "input": "src/assets", "output": "assets" }
+],
             "styles": [
               "src/styles.css"
             ]
@@ -56,10 +54,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "refaccionaria-la-escondida:build:production"
+              "buildTarget": "Refaccionaria_La_Escondida:build:production"
             },
             "development": {
-              "buildTarget": "refaccionaria-la-escondida:build:development"
+              "buildTarget": "Refaccionaria_La_Escondida:build:development"
             }
           },
           "defaultConfiguration": "development"
