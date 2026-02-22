@@ -2,11 +2,11 @@
 <products>
   <product>
     <id>1</id>
-    <name>Filtro de aceite</name>
-    <price>120</price>
-    <imageUrl>assets/filtro.jpg</imageUrl>
+    <name>Aceite MOBIL</name>
+    <price>240</price>
+    <imageUrl>/assets/aceite.png</imageUrl>
     <category>Motor</category>
-    <description>Filtro estándar</description>
+    <description>Aceite de carro</description>
     <inStock>true</inStock>
   </product>
 
@@ -14,9 +14,9 @@
     <id>2</id>
     <name>Bujía</name>
     <price>75</price>
-    <imageUrl>assets/bujia.jpg</imageUrl>
+    <imageUrl>/assets/bujia.jpg</imageUrl>
     <category>Encendido</category>
     <description>Bujía NGK</description>
-    <inStock>yes</inStock>
+    <inStock>true</inStock>
   </product>
 </products>
