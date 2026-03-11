@@ -4,7 +4,7 @@
   <div class="body">
     <div class="top">
       <h3 class="title">{{ product.name }}</h3>
-      <span class="price">{{ product.price | currency:'MXN' }}</span>
+      <span class="price">$ {{ product.price }}</span>
     </div>
 
     <p class="meta">{{ product.category }}</p>
@@ -14,8 +14,8 @@
       @if (product.inStock) { En stock } @else { Agotado }
     </p>
 
-    <button class="btn" [disabled]="!product.inStock">
-      Agregar
+    <button class="btn" [disabled]="!product.inStock" (click)="onAdd()">
+      Agregar al carrito
     </button>
   </div>
 </article>
