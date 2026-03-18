@@ -19,4 +19,35 @@
     <description>Bujía NGK</description>
     <inStock>true</inStock>
   </product>
+
+  <product>
+    <id>3</id>
+    <name>Filtro de aire</name>
+    <price>150</price>
+    <imageUrl>/assets/filtro-aire.jpg</imageUrl>
+    <category>Motor</category>
+    <description>Filtro de aire para motor</description>
+    <inStock>false</inStock>
+  </product>
+
+  <product>
+    <id>4</id>
+    <name>Pastillas de freno</name>
+    <price>300</price>
+    <imageUrl>/assets/pastillas-freno.jpg</imageUrl>
+    <category>Frenos</category>
+    <description>Pastillas de freno para carro</description>
+    <inStock>true</inStock>
+  </product>
+
+  <product>
+    <id>5</id>
+    <name>Correa de distribución</name>
+    <price>500</price>
+    <imageUrl>/assets/correa-distribucion.jpg</imageUrl>
+    <category>Motor</category>
+    <description>Correa de distribución para motor</description>
+    <inStock>false</inStock>
+  </product>
+
 </products>
