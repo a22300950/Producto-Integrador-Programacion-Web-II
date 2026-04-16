@@ -20,9 +20,13 @@ export class CatalogoComponent {
     private productsService: ProductsService,
     private carritoService: CarritoService
   ) {
+    console.log('CatalogoComponent constructor called');
     this.productsService.getAll().subscribe({
-      next: (data) => this.products.set(data),
-      error: (err) => console.error('Error cargando XML:', err),
+      next: (data) => {
+        console.log('Products loaded:', data);
+        this.products.set(data);
+      },
+      error: (err) => console.error('Error loading products:', err),
     });
   }
 
