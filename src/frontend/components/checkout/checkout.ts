@@ -63,7 +63,8 @@ export class CheckoutComponent implements AfterViewInit {
                     const capture = await firstValueFrom(this.paypalService.capturarOrden(data.orderID));
 
                     console.log('Pago exitoso:', capture);
-                    this.mensaje = '¡Pago exitoso! Gracias por tu compra.';
+                    this.carritoService.exportarXML();
+                    this.mensaje = '¡Pago exitoso! El recibo se descargó automáticamente.';
                     this.carritoService.vaciar();
                     this.paypalButtonsContainer.nativeElement.innerHTML = '';
                 } catch (error) {

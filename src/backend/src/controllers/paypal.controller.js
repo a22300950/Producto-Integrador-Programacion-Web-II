@@ -29,10 +29,10 @@ export async function createOrder(req, res){
 
 export async function captureOrder(req, res){
     try {
-        const {orderId} = req.params;
+        const {orderId} = req.body;
 
         if(!orderId){
-            return res.status(400).json({error: 'ID de orden es requerido'});
+            return res.status(400).json({error: 'ID de orden es requerido en el cuerpo de la solicitud'});
         }
 
         const captureData = await capturePaypalOrder(orderId);
