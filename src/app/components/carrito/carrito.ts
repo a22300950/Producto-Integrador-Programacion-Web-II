@@ -1,5 +1,6 @@
 import { Component, computed } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { CarritoService } from '../../services/carrito.service';
 import { Product } from '../../models/producto.model';
 import { Signal } from '@angular/core';
@@ -7,7 +8,7 @@ import { Signal } from '@angular/core';
 @Component({
   selector: 'app-carrito',
   standalone: true,
-  imports: [CurrencyPipe], // NO es CommonModule
+  imports: [CurrencyPipe, RouterLink], // NO es CommonModule
   templateUrl: './carrito.html',
   styleUrls: ['./carrito.css'],
 })
