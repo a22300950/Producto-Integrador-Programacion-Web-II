@@ -1,0 +1,23 @@
+<header class="main-toolbar">
+  <div class="toolbar-container">
+    
+    <div class="logo-section" routerLink="/">
+      <span class="brand-name">La Escondida</span>
+    </div>
+
+    <div class="search-section">
+      <app-search-bar></app-search-bar>
+    </div>
+
+    <div class="actions-section">
+      <button class="icon-btn" routerLink="/carrito">
+        <span class="material-icons-outlined">shopping_cart</span>
+        @if (cartCount() > 0) {
+          <span class="badge">{{ cartCount() }}</span>
+        }
+      </button>
+      
+      </div>
+
+  </div>
+</header>

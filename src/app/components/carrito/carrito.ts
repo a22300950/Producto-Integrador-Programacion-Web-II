@@ -1,14 +1,15 @@
 import { Component, computed } from '@angular/core';
-import { CurrencyPipe } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { CommonModule, CurrencyPipe } from '@angular/common';
+import { RouterLink, RouterModule } from '@angular/router';
 import { CarritoService } from '../../services/carrito.service';
 import { Product } from '../../models/producto.model';
 import { Signal } from '@angular/core';
+import { ReciboComponent } from '../recibo/recibo';
 
 @Component({
   selector: 'app-carrito',
   standalone: true,
-  imports: [CurrencyPipe, RouterLink], // NO es CommonModule
+  imports: [CurrencyPipe, RouterLink, CommonModule, RouterModule, ReciboComponent], // NO es CommonModule
   templateUrl: './carrito.html',
   styleUrls: ['./carrito.css'],
 })
@@ -16,8 +17,14 @@ export class CarritoComponent {
   carrito: Signal<Product[]>;
   total = computed(() => this.carritoService.total());
 
+  mostrarRecibo = false;
+
   constructor(private carritoService: CarritoService) {
     this.carrito = this.carritoService.productos;
+  }
+
+  imprimirTicket() {
+    window.print();
   }
 
   quitar(id: number) {
@@ -26,9 +33,5 @@ export class CarritoComponent {
 
   vaciar() {
     this.carritoService.vaciar();
-  }
-
-  exportarXML() {
-    this.carritoService.exportarXML();
   }
 }

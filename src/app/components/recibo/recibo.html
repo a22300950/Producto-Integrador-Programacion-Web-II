@@ -1,0 +1,53 @@
+<div class="ticket-container" id="printable-area">
+  <div class="header">
+    <h2 class="bold">{{ emisor.nombre }}</h2>
+    <p>RFC: {{ emisor.rfc }}</p>
+    <p>{{ emisor.direccion }}</p>
+    <p>CP: {{ emisor.cp }}, {{ emisor.ciudad }}</p>
+    <p>{{ emisor.regimen }}</p>
+  </div>
+
+  <hr>
+
+  <div class="info">
+    <p><strong>Folio:</strong> #{{ folio }}</p>
+    <p><strong>Fecha:</strong> {{ fecha | date:'dd/MM/yyyy HH:mm' }}</p>
+  </div>
+
+  <hr>
+
+  <table class="items-table">
+    <thead>
+      <tr>
+        <th>Cant</th>
+        <th>Descripción</th>
+        <th>Importe</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (item of productos(); track item.id) {
+        <tr>
+          <td>1</td>
+          <td>{{ item.name }}</td>
+          <td>{{ item.price | currency }}</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+
+  <hr>
+
+  <div class="totals">
+    <p>SUBTOTAL: {{ subtotal() | currency }}</p>
+    <p>IVA (16%): {{ iva() | currency }}</p>  
+        <div class="total-row">
+            <strong>TOTAL: {{ total() | currency }}</strong>
+        </div>
+   </div>
+
+  <div class="footer">
+    <p class="total-letra">*** {{ totalLetra }} ***</p>
+    <p>¡Gracias por su preferencia!</p>
+    <p>Este no es un comprobante fiscal (CFDI)</p>
+  </div>
+</div>

@@ -6,10 +6,12 @@
 } 
 
 .titulo {
-  text-align: center;
+  text-align: center;  
+  overflow: hidden;
   height: 20vh;
   background-color: #1E3A5F;
   margin: 0;
+  padding: 0;
 }
 
 .titulo h1 {
@@ -26,14 +28,6 @@
   margin: 0;
   font-family: 'Inter';
   font-size: 1.2em;
-}
-
-.subtitulo {
-    background-color: #2b2f33;
-    height: auto;
-    text-align: center;
-    font-family: Gentium Basic, serif;
-    color: white;
 }
 
 

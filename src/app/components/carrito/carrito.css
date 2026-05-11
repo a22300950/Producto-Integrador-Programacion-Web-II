@@ -13,3 +13,21 @@ cart { border: 1px solid #e5e7eb; border-radius: 12px; padding: 14px; background
 .btn.danger {display: flex; align-items: center; background: #ef4444; color: #fff; height: 75%; font-family: 'Inter'; }
 .btn.green { background: #218676; color: #fff; font-family: 'Inter'; }
 
+.btn-back {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  color: #004d40; 
+  cursor: pointer;
+  font-weight: 600;
+  padding: 10px 0;
+  transition: transform 0.2s;
+}
+
+.btn-back:hover {
+  transform: translateX(-5px); 
+  color: #00796b;
+}
+

@@ -1,13 +1,13 @@
+<div class="subtitulo">
+  <h1>Catálogo</h1>
+</div>
 
-@if (products().length === 0) {
-  <p>Cargando productos (o revisa la ruta del XML).</p>
+@if (productosFiltrados().length === 0) {
+  <p>No se encontraron productos para tu búsqueda.</p>
 } @else {
   <section class="grid">
-    @for (p of products(); track p.id) {
+    @for (p of productosFiltrados(); track p.id) {
       <app-product-card [product]="p" (add)="agregar($event)"></app-product-card>
     }
   </section>
 }
-
-<hr class="sep" />
-<app-carrito></app-carrito>

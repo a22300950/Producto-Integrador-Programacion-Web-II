@@ -4,6 +4,7 @@ import { PaypalService } from '../../services/paypal.service';
 import { CurrencyPipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
+import { ReciboComponent } from '../../../app/components/recibo/recibo';
 
 declare const paypal: any;
 
@@ -11,7 +12,7 @@ declare const paypal: any;
   selector: 'app-checkout',
   standalone: true,
   templateUrl: './checkout.html',
-  imports: [CurrencyPipe, RouterLink]
+  imports: [CurrencyPipe, RouterLink, ReciboComponent]
 })
 
 export class CheckoutComponent implements AfterViewInit {
@@ -63,7 +64,8 @@ export class CheckoutComponent implements AfterViewInit {
                     const capture = await firstValueFrom(this.paypalService.capturarOrden(data.orderID));
 
                     console.log('Pago exitoso:', capture);
-                    this.carritoService.exportarXML();
+                    //this.carritoService.exportarXML();
+                    window.print();
                     this.mensaje = '¡Pago exitoso! El recibo se descargó automáticamente.';
                     this.carritoService.vaciar();
                     this.paypalButtonsContainer.nativeElement.innerHTML = '';

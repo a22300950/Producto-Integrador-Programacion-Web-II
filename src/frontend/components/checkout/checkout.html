@@ -1,24 +1,52 @@
+<div style="margin-bottom: 20px;">
+  <button routerLink="/carrito" 
+          style="display: flex; align-items: center; gap: 8px; background: none; border: none; color: #004d40; cursor: pointer; font-weight: 600; padding: 0; font-family: 'Inter', sans-serif;">
+    <span class="material-icons-outlined">arrow_back</span>
+    Regresar al carrito
+  </button>
+</div>
+
 <h2>Checkout</h2>
 
 @if (carrito.length === 0) {
   <p>Tu carrito está vacío.</p>
-  <a routerLink="/">Ir al catálogo</a>
+  <a routerLink="/" style="color: #00796b; font-weight: bold;">Ir al catálogo</a>
 } @else {
-  <div style="border:1px solid #ccc; border-radius:12px; padding:16px;">
-    <h3>Resumen del pedido</h3>
+  <div style="border:1px solid #ccc; border-radius:12px; padding:16px; background-color: #f9f9f9;">
+    <h3 style="margin-top: 0;">Resumen del pedido</h3>
 
     @for (producto of carrito; track producto.id) {
-      <p>
-        {{ producto.name }} -
-        {{ producto.price | currency:'MXN' }}
+      <p style="margin: 8px 0;">
+        {{ producto.name }} - 
+        <strong>{{ producto.price | currency:'MXN' }}</strong>
       </p>
     }
 
-    <hr>
-    <p><strong>Total: {{ total | currency:'MXN' }}</strong></p>
+    <hr style="border: 0; border-top: 1px solid #eee; margin: 16px 0;">
+    <p style="font-size: 1.2em;"><strong>Total: {{ total | currency:'MXN' }}</strong></p>
 
-    <div #paypalButtonContainer></div>
+    <div #paypalButtonContainer style="margin-top: 20px;"></div>
 
-    <p>{{ mensaje }}</p>
+    @if (mensaje) {
+      <p style="margin-top: 15px; padding: 10px; border-radius: 8px; background-color: #e0f2f1; color: #004d40;">
+        {{ mensaje }}
+      </p>
+    }
   </div>
 }
+
+<div class="ticket-checkout-container">
+  <app-recibo id="printable-area"></app-recibo>
+</div>
+
+<style>
+  .ticket-checkout-container {
+    display: none;
+  }
+
+  @media print {
+    .ticket-checkout-container {
+      display: block !important;
+    }
+  }
+</style>

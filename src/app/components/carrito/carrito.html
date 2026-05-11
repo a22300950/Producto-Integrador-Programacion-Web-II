@@ -1,6 +1,16 @@
 <section class="cart">
   <link href='https://fonts.googleapis.com/css?family=Inter' rel='stylesheet'>
-  <h2 class="title">Carrito</h2>
+  
+  <div class="carrito-container">
+    <div class="back-action">
+      <button routerLink="/catalogo" class="btn-back">
+        <span class="material-icons-outlined">arrow_back</span>
+        Continuar comprando
+      </button>
+    </div>
+
+    <h2 class="title">Tu Carrito</h2>
+  </div>
 
   @if (carrito().length === 0) {
     <p class="empty">Tu carrito está vacío.</p>
@@ -24,8 +34,24 @@
 
     <div class="actions">
       <button class="btn" (click)="vaciar()">Vaciar carrito</button>
-      <button class="btn green" (click)="exportarXML()">Exportar Recibo XML</button>
+      
+      <button class="btn info" (click)="mostrarRecibo = !mostrarRecibo">
+        {{ mostrarRecibo ? 'Ocultar Recibo' : 'Generar Recibo para Impresión' }}
+      </button>
+      
       <a class="btn primary" routerLink="/checkout">Proceder al pago</a>
     </div>
+
+    @if (mostrarRecibo) {
+      <hr class="sep" />
+      <div class="recibo-preview">
+        <app-recibo></app-recibo>
+        <div style="text-align: center; margin-top: 15px;">
+          <button class="btn primary" (click)="imprimirTicket()">
+            <span class="material-icons-outlined">print</span> Imprimir ahora
+          </button>
+        </div>
+      </div>
+    }
   }
 </section>

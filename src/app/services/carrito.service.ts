@@ -1,12 +1,20 @@
 import { Injectable, signal } from '@angular/core';
 import { Product } from '../models/producto.model';
 
+export const DATOS_EMISOR = {
+  nombre: 'REFACCIONARIA LA ESCONDIDA',
+  rfc: 'RELE800101ABC', 
+  direccion: 'Av. Principal #123, Col. Centro',
+  cp: '45000',
+  ciudad: 'Zapopan, Jalisco',
+  regimen: '612 - Personas Físicas con Actividades Empresariales'
+};
+
 @Injectable({ providedIn: 'root' })
 export class CarritoService {
-  // Lista reactiva del carrito
+  
   private productosSignal = signal<Product[]>([]);
 
-  // Exponer como readonly
   productos = this.productosSignal.asReadonly();
 
   agregar(producto: Product) {
@@ -14,7 +22,17 @@ export class CarritoService {
   }
 
   quitar(id: number) {
-    this.productosSignal.update(lista => lista.filter(p => p.id !== id));
+    this.productosSignal.update(lista => {
+      const index = lista.findIndex(p => p.id === id);
+
+      if (index !== -1) {
+        const nuevaLista = [...lista];
+        nuevaLista.splice(index, 1);   
+        return nuevaLista;             
+      }
+
+      return lista;
+    });
   }
 
   vaciar() {
@@ -28,7 +46,6 @@ export class CarritoService {
   exportarXML() {
     const productos = this.productosSignal();
 
-    // Estructura XML manual
     let xml = `<?xml version="1.0" encoding="UTF-8"?>\n<recibo>\n`;
 
     for (const p of productos) {
