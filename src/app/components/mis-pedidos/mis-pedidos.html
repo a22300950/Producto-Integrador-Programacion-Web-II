@@ -1,0 +1,14 @@
+<div class="mis-pedidos">
+  <h2>Mis Pedidos</h2>
+  <div *ngIf="pedidos.length === 0">No tienes pedidos aún.</div>
+  <ul>
+    <li *ngFor="let pedido of pedidos">
+      <strong>Pedido #{{pedido.id}}</strong> - {{pedido.fecha | date:'short'}}<br>
+      Total: ${{pedido.total}}<br>
+      Estatus: <span [ngClass]="pedido.estatus.toLowerCase()">{{pedido.estatus}}</span>
+      <ul>
+        <li *ngFor="let prod of pedido.productos">{{prod.name}} (x{{prod.cantidad}})</li>
+      </ul>
+    </li>
+  </ul>
+</div>

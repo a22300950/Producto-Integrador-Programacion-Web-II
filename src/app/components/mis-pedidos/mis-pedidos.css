@@ -1,0 +1,21 @@
+.mis-pedidos {
+  padding: 1rem;
+}
+.mis-pedidos ul {
+  list-style: none;
+  padding: 0;
+}
+.mis-pedidos li {
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 0.5rem;
+}
+.mis-pedidos .pendiente {
+  color: orange;
+}
+.mis-pedidos .pagado {
+  color: green;
+}
+.mis-pedidos .cancelado {
+  color: red;
+}

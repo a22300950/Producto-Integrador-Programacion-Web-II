@@ -1,6 +1,8 @@
-import {  AfterViewInit,  Component,  ElementRef,  ViewChild,  inject} from '@angular/core';
+
+import { AfterViewInit, Component, ElementRef, ViewChild, inject } from '@angular/core';
 import { CarritoService } from '../../../app/services/carrito.service';
 import { PaypalService } from '../../services/paypal.service';
+import { PedidoService } from '../../../app/services/pedido.service';
 import { CurrencyPipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
@@ -9,37 +11,37 @@ import { ReciboComponent } from '../../../app/components/recibo/recibo';
 declare const paypal: any;
 
 @Component({
-  selector: 'app-checkout',
-  standalone: true,
-  templateUrl: './checkout.html',
-  imports: [CurrencyPipe, RouterLink, ReciboComponent]
+    selector: 'app-checkout',
+    standalone: true,
+    templateUrl: './checkout.html',
+    imports: [CurrencyPipe, RouterLink, ReciboComponent]
 })
-
 export class CheckoutComponent implements AfterViewInit {
-  private carritoService = inject(CarritoService);
-  private paypalService = inject(PaypalService);
-  @ViewChild('paypalButtonContainer', { static: false }) paypalButtonsContainer!: ElementRef;
+    private carritoService = inject(CarritoService);
+    private paypalService = inject(PaypalService);
+    private pedidoService = inject(PedidoService);
+    @ViewChild('paypalButtonContainer', { static: false }) paypalButtonsContainer!: ElementRef;
 
-  carrito = this.carritoService.productos();
-  total = this.carritoService.total();
+    carrito = this.carritoService.productos();
+    total = this.carritoService.total();
 
-  mensaje = '';
+    mensaje = '';
 
     ngAfterViewInit(): void {
         this.renderPaypalButtons();
     }
 
     private renderPaypalButtons() {
-        if(this.carrito.length === 0) {
+        if (this.carrito.length === 0) {
             return;
         }
 
-        if(typeof paypal === 'undefined') {
+        if (typeof paypal === 'undefined') {
             this.mensaje = 'Error al cargar PayPal. Por favor, recarga la página.';
             return;
         }
 
-        if(!this.paypalButtonsContainer) {
+        if (!this.paypalButtonsContainer) {
             return;
         }
 
@@ -63,15 +65,21 @@ export class CheckoutComponent implements AfterViewInit {
                 try {
                     const capture = await firstValueFrom(this.paypalService.capturarOrden(data.orderID));
 
+                    // Guardar el pedido en la base de datos
+                    await firstValueFrom(this.pedidoService.agregarPedido(
+                        this.carrito,
+                        this.total,
+                        data.orderID // guardar el id de la orden de PayPal
+                    ));
+
                     console.log('Pago exitoso:', capture);
-                    //this.carritoService.exportarXML();
                     window.print();
                     this.mensaje = '¡Pago exitoso! El recibo se descargó automáticamente.';
                     this.carritoService.vaciar();
                     this.paypalButtonsContainer.nativeElement.innerHTML = '';
                 } catch (error) {
-                    console.error('Error al capturar orden:', error);
-                    this.mensaje = 'Error al procesar el pago. Por favor, intenta de nuevo.';
+                    console.error('Error al capturar orden o guardar pedido:', error);
+                    this.mensaje = 'Error al procesar el pago o guardar el pedido. Por favor, intenta de nuevo.';
                 }
             },
 

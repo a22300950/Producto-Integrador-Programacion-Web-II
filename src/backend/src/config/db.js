@@ -6,7 +6,7 @@ const conexion = mysql.createConnection({
     user: process.env.DB_USER || 'root',
     database: process.env.DB_NAME || 'refaccionaria',
     password: process.env.DB_PASSWORD || '',
-    port: process.env.DB_PORT ? Number(process.env.DB_PORT) : 3306
+    port: process.env.DB_PORT ? Number(process.env.DB_PORT) : 3307
 });
 
 conexion.connect((error) => {
