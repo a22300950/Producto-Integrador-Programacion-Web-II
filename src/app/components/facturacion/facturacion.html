@@ -1,0 +1,90 @@
+<div class="container mt-4">
+  <h2 class="mb-3">Módulo de Facturación Fiscal</h2>
+  <p class="text-muted">Seleccione un pedido para generar su comprobante legal (CFDI 4.0).</p>
+
+  <div class="list-group">
+    @for (pedido of pedidos(); track pedido.id_pedido) {
+      <div class="list-group-item d-flex justify-content-between align-items-center mb-3 p-3 shadow-sm border rounded">
+        <div>
+          <h5 class="mb-1 text-primary"><strong>Pedido #{{ pedido.id_pedido }}</strong></h5>
+          
+          <div class="d-flex align-items-center text-muted mb-2">
+            <span class="material-icons" style="font-size: 18px; margin-right: 8px;">calendar_today</span>
+            <span>{{ pedido.fecha | date:'medium' }}</span>
+          </div>
+          
+          <p class="mb-0">Total Pagado: <strong>{{ pedido.total | currency:'MXN' }}</strong></p>
+        </div>
+        
+        <button class="btn btn-primary d-flex align-items-center" (click)="prepararFactura(pedido)">
+          <span class="material-icons" style="margin-right: 8px;">receipt</span>
+          Generar Factura
+        </button>
+      </div>
+    } @empty {
+      <div class="alert alert-light text-center border">
+        No se encontraron pedidos para facturar.
+      </div>
+    }
+  </div>
+</div>
+
+@if (pedidoSeleccionado()) {
+  <div id="factura-legal" class="factura-print-area">
+    <div class="header-factura">
+      <div>
+        <h1 style="margin: 0; color: #1a237e;">REFACCIONARIA LA ESCONDIDA</h1>
+        <p><strong>RFC:</strong> REC101010H88</p>
+        <p>Calle de las Refacciones #404, Guadalajara, Jal.</p>
+        <p>601 - General de Ley Personas Morales</p>
+      </div>
+      <div class="folio-box">
+        <p style="margin: 0; font-weight: bold;">FACTURA ELECTRÓNICA</p>
+        <p class="uuid">UUID: {{ uuid() }}</p>
+        <p><strong>Folio: #{{ pedidoSeleccionado()?.id_pedido }}</strong></p>
+        <p>Fecha: {{ pedidoSeleccionado()?.fecha | date:'dd/MM/yyyy HH:mm' }}</p>
+      </div>
+    </div>
+
+    <div class="datos-cliente" style="margin-top: 20px; border-top: 2px solid #333; padding-top: 10px;">
+      <p><strong>RECEPTOR:</strong> PÚBLICO EN GENERAL</p>
+      <p><strong>RFC:</strong> XAXX010101000 | <strong>Uso CFDI:</strong> G03 - Gastos en general</p>
+    </div>
+
+    <table class="tabla-factura">
+      <thead>
+        <tr>
+          <th>Clave SAT</th>
+          <th>Cant</th>
+          <th>Descripción</th>
+          <th>Precio Unit.</th>
+          <th>Importe</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of pedidoSeleccionado()?.productos; track $index) {
+          <tr>
+            <td>25171501</td>
+            <td>1</td>
+            <td>{{ item.name }}</td>
+            <td>{{ item.price / 1.16 | currency:'MXN' }}</td>
+            <td>{{ item.price / 1.16 | currency:'MXN' }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+
+    <div class="footer-sat">
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://www.sat.gob.mx" alt="QR">
+      <div class="sellos-fake">
+        <p><strong>Sello digital del SAT:</strong></p>
+        <p class="cadena-sat">MDYwRkYxMjMwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMD...</p>
+        <div class="totales">
+           <p>Subtotal: {{ pedidoSeleccionado()!.total / 1.16 | currency:'MXN' }}</p>
+           <p>IVA (16%): {{ pedidoSeleccionado()!.total - (pedidoSeleccionado()!.total / 1.16) | currency:'MXN' }}</p>
+           <p style="font-size: 1.2em;"><strong>TOTAL: {{ pedidoSeleccionado()!.total | currency:'MXN' }}</strong></p>
+        </div>
+      </div>
+    </div>
+  </div>
+}

@@ -1,5 +1,5 @@
 export interface Pedido {
-  id: number;
+  id_pedido: number;
   productos: any[];
   total: number;
   fecha: Date;

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PedidoService } from '../../services/pedido.service';
 import { Pedido } from '../../models/pedido.model';
@@ -10,19 +10,25 @@ import { Pedido } from '../../models/pedido.model';
   templateUrl: './mis-pedidos.html',
   styleUrls: ['./mis-pedidos.css']
 })
-export class MisPedidosComponent {
-  pedidos: Pedido[] = [];
+export class MisPedidosComponent implements OnInit {
+  private pedidoService = inject(PedidoService);
+  
+  // Usar signal asegura que Angular detecte el cambio de datos al instante
+  pedidos = signal<Pedido[]>([]);
 
-  constructor(private pedidoService: PedidoService) {
+  ngOnInit() {
+    this.loadPedidos();
+  }
+
+  loadPedidos() {
     this.pedidoService.getPedidos().subscribe({
       next: (data) => {
-        console.log('Pedidos recibidos:', data);
-        // Aseguramos que sea array y no undefined/null
-        this.pedidos = Array.isArray(data) ? data : [];
+        // Mapeamos los datos de SQL al signal
+        this.pedidos.set(Array.isArray(data) ? data : []);
       },
       error: (err) => {
         console.error('Error al obtener pedidos:', err);
-        this.pedidos = [];
+        this.pedidos.set([]);
       }
     });
   }

@@ -24,3 +24,32 @@ body {
     padding: 0;
   }
 }
+
+.factura-print-area {
+  display: none;
+}
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #factura-legal, #factura-legal * {
+    visibility: visible !important;
+  }
+  #factura-legal {
+    display: block !important;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    padding: 20px;
+    background: white;
+  }
+  .header-factura { display: flex; justify-content: space-between; margin-bottom: 20px; }
+  .folio-box { border: 2px solid #333; padding: 10px; text-align: center; }
+  .tabla-factura { width: 100%; border-collapse: collapse; margin: 20px 0; }
+  .tabla-factura th { border-bottom: 2px solid #333; text-align: left; padding: 8px; background: #f2f2f2; }
+  .tabla-factura td { padding: 8px; border-bottom: 1px solid #eee; }
+  .footer-sat { display: flex; gap: 20px; margin-top: 30px; align-items: flex-start; }
+  .cadena-sat { font-size: 8px; word-break: break-all; color: #666; width: 300px; }
+}

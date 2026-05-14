@@ -1,14 +1,26 @@
-<div class="mis-pedidos">
+<div class="container mt-4">
   <h2>Mis Pedidos</h2>
-  <div *ngIf="pedidos.length === 0">No tienes pedidos aún.</div>
-  <ul>
-    <li *ngFor="let pedido of pedidos">
-      <strong>Pedido #{{pedido.id}}</strong> - {{pedido.fecha | date:'short'}}<br>
-      Total: ${{pedido.total}}<br>
-      Estatus: <span [ngClass]="pedido.estatus.toLowerCase()">{{pedido.estatus}}</span>
-      <ul>
-        <li *ngFor="let prod of pedido.productos">{{prod.name}} (x{{prod.cantidad}})</li>
-      </ul>
-    </li>
-  </ul>
+  @if (pedidos().length === 0) {
+    <div class="alert alert-info">Cargando tus pedidos...</div>
+  } @else {
+    <div class="row">
+      @for (pedido of pedidos(); track pedido.id_pedido) {
+        <div class="col-md-6 mb-3">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title">Pedido #{{ pedido.id_pedido }}</h5>
+              <p class="card-text">
+                <span class="material-icons" style="font-size: 16px;">calendar_today</span> 
+                {{ pedido.fecha | date:'short' }}<br>
+                <strong>Total: {{ pedido.total | currency:'MXN' }}</strong>
+              </p>
+              <span class="badge" [ngClass]="{'bg-success': pedido.estatus === 'Pagado', 'bg-warning': pedido.estatus === 'Pendiente'}">
+                {{ pedido.estatus }}
+              </span>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  }
 </div>
